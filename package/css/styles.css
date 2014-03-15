@@ -1,0 +1,18 @@
+.asanaExtras_summary {
+	background-color: lightgreen;
+	color: black;
+	font-size: 11px;
+	padding: 4px;
+	border-radius: 3px;
+	font-weight: 600;
+	white-space: nowrap;
+}
+
+.asanaExtras_warn {
+	background-color: orange;
+	color: black;
+}
+
+.asanaExtras_bad {
+	background-color: red;
+}

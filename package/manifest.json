@@ -1,0 +1,18 @@
+{
+  "manifest_version": 2,
+
+  "name": "Asana Extras",
+  "description": "Adds some extras to Asana.",
+  "version": "0.1",
+
+  "content_scripts": [
+    {
+      "matches": ["https://app.asana.com/*"],
+      "css": ["css/styles.css"],
+      "js": ["js/jquery.js", "js/main.js"]
+    }
+  ],
+  "permissions": [
+    "https://app.asana.com/"
+  ]
+}
