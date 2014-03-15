@@ -1,7 +1,8 @@
 console.log("Hello World");
 
 // Run
-setInterval(process, 2000);
+process();
+setInterval(process, 10000);
 //$(".group.today_group").bind("DOMSubtreeModified", process);
 
 // Functions
@@ -41,7 +42,7 @@ function process(e) {
 			summary.insertBefore(container);
 		}
 		
-		summary.text("[#" + sprint.tasks.length + " +" + points.points + " ?" + points.unknown + "]");
+		summary.text("#" + sprint.tasks.length + " " + points.points.toFixed(2) + "h " + points.unknown + "?");
 		
 		if (points.unknown > 0) {
 			summary.addClass("asanaExtras_warn");
@@ -84,9 +85,9 @@ function calculatePoints(sprint) {
 			catch (e) {
 				unknown++;
 			}
+		} else {
+			unknown++;
 		}
-		
-		unknown++;
 	}
 	
 	return { points: points, unknown: unknown };
