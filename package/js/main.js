@@ -1,5 +1,3 @@
-console.log("Hello World");
-
 // Run
 process();
 setInterval(process, 10000);
@@ -56,12 +54,6 @@ function process(e) {
 			summary.removeClass("asanaExtras_bad");
 		}
 	}
-		
-	taskElements.map(function() {
-			return $(this).val();
-		})
-		.get()
-		.join();
 }
 
 function calculatePoints(sprint) {
