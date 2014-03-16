@@ -1,11 +1,13 @@
 // Run
 process();
 setInterval(process, 10000);
+document.addEventListener("mouseup", process, true);
+document.addEventListener("keyup", process, true); 
 //$(".group.today_group").bind("DOMSubtreeModified", process);
 
 // Functions
 function process(e) {
-	var groupToday = $(".group.today_group"),
+	var groupToday = $(".center-pane-lower-body"); //$(".group.today_group"),
 		taskElements = groupToday.find(".task-row-text-input"),
 		sprints = [];
 		
@@ -37,10 +39,10 @@ function process(e) {
 		
 		if (summary.length == 0) {
 			summary = $("<span class='asanaExtras_summary'></span>");
-			summary.insertBefore(container);
+			summary.insertBefore(container.find(".bar_input_span"));
 		}
 		
-		summary.text("#" + sprint.tasks.length + " " + points.points.toFixed(2) + "h " + points.unknown + "?");
+		summary.text("#" + sprint.tasks.length + "  " + points.points.toFixed(2) + "h  " + points.unknown + "?");
 		
 		if (points.unknown > 0) {
 			summary.addClass("asanaExtras_warn");

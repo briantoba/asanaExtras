@@ -2,10 +2,11 @@
 	background-color: lightgreen;
 	color: black;
 	font-size: 11px;
-	padding: 4px;
 	border-radius: 3px;
 	font-weight: 600;
 	white-space: nowrap;
+	position: relative;
+	padding: 2px 4px;
 }
 
 .asanaExtras_warn {
@@ -15,4 +16,8 @@
 
 .asanaExtras_bad {
 	background-color: red;
+}
+
+.bar {
+padding-right: 150px !important;
 }
