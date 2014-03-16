@@ -1,9 +1,7 @@
 // Run
 process();
-setInterval(process, 10000);
 document.addEventListener("mouseup", process, true);
 document.addEventListener("keyup", process, true); 
-//$(".group.today_group").bind("DOMSubtreeModified", process);
 
 // Functions
 function process(e) {
@@ -42,7 +40,7 @@ function process(e) {
 			summary.insertBefore(container.find(".bar_input_span"));
 		}
 		
-		summary.text("#" + sprint.tasks.length + "  " + points.points.toFixed(2) + "h  " + points.unknown + "?");
+		summary.text("#" + sprint.tasks.length + "  " + points.points.toFixed(2) + "h" + (points.unknown > 0 ? " " + points.unknown + "?" : ""));
 		
 		if (points.unknown > 0) {
 			summary.addClass("asanaExtras_warn");
