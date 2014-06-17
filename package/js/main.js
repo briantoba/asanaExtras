@@ -1,5 +1,5 @@
 // Run
-process();
+setTimeout(process, 3000);
 document.addEventListener("mouseup", process, true);
 document.addEventListener("keyup", process, true); 
 
@@ -44,15 +44,18 @@ function process(e) {
 		
 		if (points.unknown > 0) {
 			summary.addClass("asanaExtras_warn");
+			summary.removeClass("asanaExtras_bad");
 		} else {
 			summary.removeClass("asanaExtras_warn");
+			
+			if (points.points > 6.5) {
+				summary.addClass("asanaExtras_bad");
+			} else {
+				summary.removeClass("asanaExtras_bad");
+			}
 		}
 		
-		if (points.points > 8) {
-			summary.addClass("asanaExtras_bad");
-		} else {
-			summary.removeClass("asanaExtras_bad");
-		}
+		
 	}
 }
 
