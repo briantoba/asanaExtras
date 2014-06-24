@@ -1,5 +1,6 @@
 // Run
-setTimeout(process, 3000);
+setInterval(process, 10000);
+setTimeout(process, 5000);
 document.addEventListener("mouseup", process, true);
 document.addEventListener("keyup", process, true); 
 
@@ -7,13 +8,14 @@ document.addEventListener("keyup", process, true);
 function process(e) {
 	var groupToday = $(".center-pane-lower-body"); //$(".group.today_group"),
 		taskElements = groupToday.find(".task-row-text-input"),
-		sprints = [];
+		sprints = [],
+		remaining = remainingHours(18);
 		
 	taskElements.each(function() {
 		var task = $(this).val();
 		
 		if (/.*:/.test(task)) {
-			// Sprint
+			// Sprint (because it hast a colon at the end)
 			sprints.push({ name: task, element: this, tasks: [] });
 		} else {
 			if (sprints.length == 0) {
@@ -31,7 +33,10 @@ function process(e) {
 			val = elem.val(),
 			points = calculatePoints(sprint),
 			summary,
-			container = elem.parent().parent();		
+			container = elem.parent().parent(),
+			remainingText = "",
+			overbookedText = "",
+			todayIndicator = "";		
 		
 		summary = container.parent().find(".asanaExtras_summary")
 		
@@ -39,8 +44,29 @@ function process(e) {
 			summary = $("<span class='asanaExtras_summary'></span>");
 			summary.insertBefore(container.find(".bar_input_span"));
 		}
+
+		summary.removeClass("asanaExtras_notime");
+		summary.removeClass("asanaExtras_today");
+
+		// Check if the sprint starts with a star
+		if (/\*.*/.test(sprint.name)) {
+			todayIndicator = "===> ";
+			remainingText = " {" + remaining.toFixed(1) + "h} ";
+			
+			if (points.points > remaining) {
+				summary.addClass("asanaExtras_notime");
+				overbookedText = " OVERBOOKED";
+			}
+
+			summary.addClass("asanaExtras_today");
+		}
 		
-		summary.text("#" + sprint.tasks.length + "  " + points.points.toFixed(2) + "h" + (points.unknown > 0 ? " " + points.unknown + "?" : ""));
+		summary.text(todayIndicator +
+					 "#" + sprint.tasks.length + "  " +
+				     points.points.toFixed(1) + "h" +
+					 (points.unknown > 0 ? " " + points.unknown + "?" : "") +
+					 remainingText +
+					 overbookedText);
 		
 		if (points.unknown > 0) {
 			summary.addClass("asanaExtras_warn");
@@ -86,4 +112,15 @@ function calculatePoints(sprint) {
 	}
 	
 	return { points: points, unknown: unknown };
+}
+
+function remainingHours(untilTime, now) {
+    now = now || new Date();
+    
+    untilDate = new Date(now.getYear() + 1900, now.getMonth(), now.getDate(), untilTime, 0, 0);
+    
+    console.log(untilDate);
+    console.log(now);
+    
+    return (untilDate - now)/1000/60/60;
 }

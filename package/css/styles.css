@@ -18,6 +18,14 @@
 	background-color: red;
 }
 
+.asanaExtras_today {
+	font-size: 16px;
+}
+
+.asanaExtras_notime {
+	font-weight: bold;
+}
+
 .bar {
 	padding-right: 150px !important;
 }
