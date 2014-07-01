@@ -4,12 +4,15 @@ setTimeout(process, 5000);
 document.addEventListener("mouseup", process, true);
 document.addEventListener("keyup", process, true); 
 
+var periods = { "w-": { name: "Workday", time: 18 },
+				"h-": { name: "Home", time: 22 }}
+
 // Functions
 function process(e) {
 	var groupToday = $(".center-pane-lower-body"); //$(".group.today_group"),
 		taskElements = groupToday.find(".task-row-text-input"),
 		sprints = [],
-		remaining = remainingHours(18);
+		remaining = 0;
 		
 	taskElements.each(function() {
 		var task = $(this).val();
@@ -48,17 +51,24 @@ function process(e) {
 		summary.removeClass("asanaExtras_notime");
 		summary.removeClass("asanaExtras_today");
 
-		// Check if the sprint starts with a star
-		if (/\*.*/.test(sprint.name)) {
-			todayIndicator = "===> ";
-			remainingText = " {" + remaining.toFixed(1) + "h} ";
-			
-			if (points.points > remaining) {
-				summary.addClass("asanaExtras_notime");
-				overbookedText = " OVERBOOKED";
-			}
+		for (var iPeriod in periods) {
+			var period = periods[iPeriod],
+			regex = new RegExp(iPeriod + ".*")
 
-			summary.addClass("asanaExtras_today");
+			// Check if the sprint starts with a star
+			if (regex.test(sprint.name)) {
+				remaining = remainingHours(period.time);
+				todayIndicator = period.name + "  ===> ";
+				remainingText = " {" + remaining.toFixed(1) + "h} ";
+				
+				if (points.points > remaining) {
+					summary.addClass("asanaExtras_notime");
+					overbookedText = " OVERBOOKED";
+				}
+
+				summary.addClass("asanaExtras_today");
+				break;
+			}
 		}
 		
 		summary.text(todayIndicator +
