@@ -43,6 +43,13 @@ function process(e) {
 		
 		summary = container.parent().find(".asanaExtras_summary")
 		
+		// Skip sprints that start with a dash
+		if (/^-/.test(sprint.name))
+		{
+			summary.remove();
+			continue;
+		}
+		
 		if (summary.length == 0) {
 			summary = $("<span class='asanaExtras_summary'></span>");
 			summary.insertBefore(container.find(".bar_input_span"));
@@ -89,9 +96,7 @@ function process(e) {
 			} else {
 				summary.removeClass("asanaExtras_bad");
 			}
-		}
-		
-		
+		}		
 	}
 }
 
